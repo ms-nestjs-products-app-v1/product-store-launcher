@@ -1,4 +1,12 @@
 services:
+  nats-server:
+    container_name: nats-server
+    image: nats:latest
+    ports:
+      - "8222:8222" # Exponer solo el puerto necesario
+      # - "4222:4222"
+      # - "6222:6222"
+
   client-gateway:
     build: ./client-gateway
     container_name: client-gateway
@@ -6,7 +14,19 @@ services:
       - "3000:3000"
     environment:
       - PORT=3000
-      - NATS_SERVERS=nats://localhost:4222
+      - NATS_SERVERS=nats://nats-server:4222 # Actualizamos el DNS 'localhost' con el nombre de servicio de NATS
+      # - NATS_SERVERS=nats://localhost:4222
     volumes:
       - ./client-gateway/src:/usr/src/app/src
+    command: npm run start:dev
+
+  products-ms:
+    container_name: products-ms
+    build: ./products-ms
+    environment:
+      - PORT=3001
+      - NATS_SERVERS=nats://nats-server:4222
+      - DATABASE_URL=file:./dev.db
+    volumes:
+      - ./products-ms/src:/usr/src/app/src
     command: npm run start:dev

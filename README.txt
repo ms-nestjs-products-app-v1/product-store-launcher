@@ -28,6 +28,10 @@ PRODUCT STRORE LAUNCHER (Git Submodules & Dockerize Microservices)
     - Configuraciones de los repositories
         + Product Store Launcher
             * Crear el archivo `docker-compose.yml`.
+        + Client Gateway
+            * Crear el archivo `dockerfile`.
+        + Products Microservice
+            * Crear el archivo `dockerfile`.
     + Comandos (Terminal)
         + Compilar (reconstruir) las imágenes y levantar los contenedores
             $ docker compose up --build
