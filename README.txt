@@ -24,6 +24,17 @@ PRODUCT STRORE LAUNCHER (Git Submodules & Dockerize Microservices)
             - Si trabajamos en el repositorio que tiene submodules, PRIMERO ACTUALIZAR Y HACER PUSH en el submodule y DESPUES en el repositorio principal.
             - Si se hace al revés, se perderán las referencias de los submodules en el repositorio principal y tendremos que resolver conflictos.
 
+* Docker
+    - Configuraciones de los repositories
+        + Product Store Launcher
+            * Crear el archivo `docker-compose.yml`.
+    + Comandos (Terminal)
+        + Compilar (reconstruir) las imágenes y levantar los contenedores
+            $ docker compose up --build
+            $ docker compose up --build d           // Modo detach o segundo plano
+        + Detener y eliminar los contenedores e imágenes
+            $ docker compose down
+
 * VSCode
     - Shortcuts
         + Vista Previa de Markdown (CTRL + SHIFT + P > Search: ... 'Markdown: Open Preview')
