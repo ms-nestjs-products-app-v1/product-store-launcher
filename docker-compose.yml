@@ -1,0 +1,62 @@
+services:
+  nats-server:
+    container_name: nats-server
+    image: nats:latest
+    ports:
+      - "8222:8222" # Exponer solo el puerto necesario
+      # - "4222:4222"
+      # - "6222:6222"
+
+  client-gateway:
+    build: ./client-gateway
+    container_name: client-gateway
+    ports:
+      - "${CLIENT_GATEWAY_PORT}:3000"
+      # - "3000:3000"
+    environment:
+      - PORT=3000
+      - NATS_SERVERS=nats://nats-server:4222 # Actualizamos el DNS 'localhost' con el nombre de servicio de NATS
+      # - NATS_SERVERS=nats://localhost:4222
+    volumes:
+      - ./client-gateway/src:/usr/src/app/src
+    command: npm run start:dev
+
+  products-ms:
+    container_name: products-ms
+    build: ./products-ms
+    environment:
+      - PORT=3001
+      - NATS_SERVERS=nats://nats-server:4222
+      - DATABASE_URL=file:./dev.db
+    volumes:
+      - ./products-ms/src:/usr/src/app/src
+    command: npm run docker:start:dev
+    # command: npm run start:dev
+
+  orders-ms:
+    depends_on:
+      - orders-db
+    container_name: orders-ms
+    build: ./orders-ms
+    environment:
+      - PORT=3002
+      - NATS_SERVERS=nats://nats-server:4222
+      - DATABASE_URL=postgresql://postgres:MyPasswordPostgres123@orders-db:5432/ordersdb
+      # - DATABASE_URL=postgresql://postgres:MyPasswordPostgres123@localhost:5432/ordersdb
+    volumes:
+      - ./orders-ms/src:/usr/src/app/src
+    command: npm run docker:start:dev
+    # command: npm run start:dev
+
+  orders-db:
+    container_name: order-db
+    image: postgres:15.18-alpine
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=MyPasswordPostgres123
+      - POSTGRES_DB=ordersdb
+    volumes:
+      - ./orders-ms/pgdata:/var/lib/postgresql/data
