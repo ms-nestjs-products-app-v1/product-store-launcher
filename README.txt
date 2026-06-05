@@ -24,6 +24,10 @@ PRODUCT STRORE LAUNCHER (Git Submodules & Dockerize Microservices)
             - Si trabajamos en el repositorio que tiene submodules, PRIMERO ACTUALIZAR Y HACER PUSH en el submodule y DESPUES en el repositorio principal.
             - Si se hace al revés, se perderán las referencias de los submodules en el repositorio principal y tendremos que resolver conflictos.
 
+        + Recrear la DB de un submodule (Optional: solo con Prisma SQLite pero con otras DBs no será necesario)
+            - Ingresar al submodule, crear el archivo `.env` y generar manualmente la DB
+                $ npx prisma migrate dev        // Recontruye la DB en el submodule local
+
 * Docker
     - Configuraciones de los repositories
         + Product Store Launcher
@@ -36,6 +40,8 @@ PRODUCT STRORE LAUNCHER (Git Submodules & Dockerize Microservices)
         + Compilar (reconstruir) las imágenes y levantar los contenedores
             $ docker compose up --build
             $ docker compose up --build d           // Modo detach o segundo plano
+        + Levantar los contenedores (Sin reconstruir)
+            $ docker compose up 
         + Detener y eliminar los contenedores e imágenes
             $ docker compose down
 

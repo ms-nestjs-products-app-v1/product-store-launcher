@@ -29,4 +29,5 @@ services:
       - DATABASE_URL=file:./dev.db
     volumes:
       - ./products-ms/src:/usr/src/app/src
-    command: npm run start:dev
+    command: npm run docker:start:dev
+    # command: npm run start:dev
