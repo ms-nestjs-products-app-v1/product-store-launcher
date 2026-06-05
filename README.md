@@ -1,5 +1,13 @@
 # PRODUCT STRORE LAUNCHER (Git Submodules & Dockerize Microservices)
 
+## Setup
+
+Pasos para levantar el Product Store Launcher: `product-store-luncher`
+
+1. Clonar el repositorio.
+2. Crear y agregar las variables de entorno en `.env` basado en `.env.example`.
+3. Ejecutar la app `docker compose up --build` o `docker compose up`.
+
 ## Git Submodules
 
 Git Submodules son una características de Git que permite incluir un repositorio Git dentro de otro repositorio, manteniendo historiales separados.
