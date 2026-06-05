@@ -11,6 +11,12 @@ PRODUCT STRORE LAUNCHER (Git Submodules & Dockerize Microservices)
         + Agregar repositorios extenos al repositorio principal
             * Cliente Gateway
                 $ git submodule add {{REPOSITORY_URL}} client-gateway
+            * Products Microservice
+                $ git submodule add {{REPOSITORY_URL}} products-ms
+            * Orders Microservice
+                $ git submodule add {{REPOSITORY_URL}} orders-ms
+        + Actualizar las referencias de los submodules
+            $ git submodule update --remote
         + Reconstruir los modules de los submodules
             $ npm install
 
