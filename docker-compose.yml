@@ -60,3 +60,19 @@ services:
       - POSTGRES_DB=ordersdb
     volumes:
       - ./orders-ms/pgdata:/var/lib/postgresql/data
+
+  payments-ms:
+    container_name: payments-ms
+    build: ./payments-ms
+    ports:
+      - "${PAYMENTS_MS_PORT}:${PAYMENTS_MS_PORT}"
+    environment:
+      - PORT=${PAYMENTS_MS_PORT}
+      - NATS_SERVERS=nats://nats-server:4222
+      - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY}
+      - STRIPE_SUCCESS_URL=${STRIPE_SUCCESS_URL}
+      - STRIPE_CANCEL_URL=${STRIPE_CANCEL_URL}
+      - STRIPE_ENDPOINT_SECRET=${STRIPE_ENDPOINT_SECRET}
+    volumes:
+      - ./payments-ms/src:/usr/src/app/src
+    command: npm run start:dev
