@@ -8,6 +8,7 @@ Pasos para levantar el Product Store Launcher: `product-store-luncher`
 2. Crear y agregar las variables de entorno en `.env` basado en `.env.example`.
 3. Descargar, inicializar y sincronizar los submodules `git submodule --init --recursive`.
 4. Ejecutar la app `docker compose up --build` o `docker compose up`.
+5. (Opcional: Dev environment only) Ejecutar el servicio de Hookdeck (Forwarded to Stripe) `hookdeck listen 3003 stripe-to-localhost --path /payments/webhook`, copiar la Request_to_URL y reemplazar el Endpoint_URL en el Webhook de Stripe.
 
 ## Git Submodules
 
