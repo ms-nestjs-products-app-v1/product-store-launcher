@@ -1,4 +1,5 @@
 services:
+  # NATS SERVER
   nats-server:
     container_name: nats-server
     image: nats:latest
@@ -7,6 +8,7 @@ services:
       # - "4222:4222"
       # - "6222:6222"
 
+  # CLIENT GATEWAY
   client-gateway:
     build: ./client-gateway
     container_name: client-gateway
@@ -21,6 +23,7 @@ services:
       - ./client-gateway/src:/usr/src/app/src
     command: npm run start:dev
 
+  # PRODUCT MICROSERVICE
   products-ms:
     container_name: products-ms
     build: ./products-ms
@@ -33,6 +36,7 @@ services:
     command: npm run docker:start:dev
     # command: npm run start:dev
 
+  # ORDERS MICROSERVICE
   orders-ms:
     depends_on:
       - orders-db
@@ -61,6 +65,7 @@ services:
     volumes:
       - ./orders-ms/pgdata:/var/lib/postgresql/data
 
+  # PAYMENTS MS
   payments-ms:
     container_name: payments-ms
     build: ./payments-ms
@@ -75,4 +80,15 @@ services:
       - STRIPE_ENDPOINT_SECRET=${STRIPE_ENDPOINT_SECRET}
     volumes:
       - ./payments-ms/src:/usr/src/app/src
+    command: npm run start:dev
+
+  # AUTH MICROSERVICE
+  auth-ms:
+    container_name: auth-ms
+    build: ./auth-ms
+    environment:
+      - PORT=${AUTH_MS_PORT}
+      - NATS_SERVERS=nats://nats-server:4222
+    volumes:
+      - ./auth-ms/src:/usr/src/app/src
     command: npm run start:dev
