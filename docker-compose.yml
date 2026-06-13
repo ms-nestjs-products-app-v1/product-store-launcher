@@ -23,64 +23,64 @@ services:
       - ./client-gateway/src:/usr/src/app/src
     command: npm run start:dev
 
-  # # PRODUCT MICROSERVICE
-  # products-ms:
-  #   container_name: products-ms
-  #   build: ./products-ms
-  #   environment:
-  #     - PORT=3001
-  #     - NATS_SERVERS=nats://nats-server:4222
-  #     - DATABASE_URL=file:./dev.db
-  #   volumes:
-  #     - ./products-ms/src:/usr/src/app/src
-  #   command: npm run docker:start:dev
-  #   # command: npm run start:dev
+  # PRODUCT MICROSERVICE
+  products-ms:
+    container_name: products-ms
+    build: ./products-ms
+    environment:
+      - PORT=3001
+      - NATS_SERVERS=nats://nats-server:4222
+      - DATABASE_URL=file:./dev.db
+    volumes:
+      - ./products-ms/src:/usr/src/app/src
+    command: npm run docker:start:dev
+    # command: npm run start:dev
 
-  # # ORDERS MICROSERVICE
-  # orders-ms:
-  #   depends_on:
-  #     - orders-db
-  #   container_name: orders-ms
-  #   build: ./orders-ms
-  #   environment:
-  #     - PORT=3002
-  #     - NATS_SERVERS=nats://nats-server:4222
-  #     - DATABASE_URL=postgresql://postgres:MyPasswordPostgres123@orders-db:5432/ordersdb
-  #     # - DATABASE_URL=postgresql://postgres:MyPasswordPostgres123@localhost:5432/ordersdb
-  #   volumes:
-  #     - ./orders-ms/src:/usr/src/app/src
-  #   command: npm run docker:start:dev
-  #   # command: npm run start:dev
+  # ORDERS MICROSERVICE
+  orders-ms:
+    depends_on:
+      - orders-db
+    container_name: orders-ms
+    build: ./orders-ms
+    environment:
+      - PORT=3002
+      - NATS_SERVERS=nats://nats-server:4222
+      - DATABASE_URL=postgresql://postgres:MyPasswordPostgres123@orders-db:5432/ordersdb
+      # - DATABASE_URL=postgresql://postgres:MyPasswordPostgres123@localhost:5432/ordersdb
+    volumes:
+      - ./orders-ms/src:/usr/src/app/src
+    command: npm run docker:start:dev
+    # command: npm run start:dev
 
-  # orders-db:
-  #   container_name: order-db
-  #   image: postgres:15.18-alpine
-  #   restart: always
-  #   ports:
-  #     - "5432:5432"
-  #   environment:
-  #     - POSTGRES_USER=postgres
-  #     - POSTGRES_PASSWORD=MyPasswordPostgres123
-  #     - POSTGRES_DB=ordersdb
-  #   volumes:
-  #     - ./orders-ms/pgdata:/var/lib/postgresql/data
+  orders-db:
+    container_name: order-db
+    image: postgres:15.18-alpine
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=MyPasswordPostgres123
+      - POSTGRES_DB=ordersdb
+    volumes:
+      - ./orders-ms/pgdata:/var/lib/postgresql/data
 
-  # # PAYMENTS MS
-  # payments-ms:
-  #   container_name: payments-ms
-  #   build: ./payments-ms
-  #   ports:
-  #     - "${PAYMENTS_MS_PORT}:${PAYMENTS_MS_PORT}"
-  #   environment:
-  #     - PORT=${PAYMENTS_MS_PORT}
-  #     - NATS_SERVERS=nats://nats-server:4222
-  #     - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY}
-  #     - STRIPE_SUCCESS_URL=${STRIPE_SUCCESS_URL}
-  #     - STRIPE_CANCEL_URL=${STRIPE_CANCEL_URL}
-  #     - STRIPE_ENDPOINT_SECRET=${STRIPE_ENDPOINT_SECRET}
-  #   volumes:
-  #     - ./payments-ms/src:/usr/src/app/src
-  #   command: npm run start:dev
+  # PAYMENTS MS
+  payments-ms:
+    container_name: payments-ms
+    build: ./payments-ms
+    ports:
+      - "${PAYMENTS_MS_PORT}:${PAYMENTS_MS_PORT}"
+    environment:
+      - PORT=${PAYMENTS_MS_PORT}
+      - NATS_SERVERS=nats://nats-server:4222
+      - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY}
+      - STRIPE_SUCCESS_URL=${STRIPE_SUCCESS_URL}
+      - STRIPE_CANCEL_URL=${STRIPE_CANCEL_URL}
+      - STRIPE_ENDPOINT_SECRET=${STRIPE_ENDPOINT_SECRET}
+    volumes:
+      - ./payments-ms/src:/usr/src/app/src
+    command: npm run start:dev
 
   # AUTH MICROSERVICE
   auth-ms:
