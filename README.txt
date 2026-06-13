@@ -17,6 +17,8 @@ PRODUCT STRORE LAUNCHER (Git Submodules & Dockerize Microservices)
                 $ git submodule add {{REPOSITORY_URL}} orders-ms
             * Payments Microservice
                 $ git submodule add {{REPOSITORY_URL}} payments-ms
+            * Auth Microservice
+                $ git submodule add {{REPOSITORY_URL}} auth-ms
         + Actualizar las referencias de los submodules
             $ git submodule update --remote
         + Descargar, inicializar y sincronizar el contenido de todos los submodules (repositorio externos anidados)
